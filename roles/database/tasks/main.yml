@@ -1,0 +1,19 @@
+- name: Create Docker network
+  docker_network:
+    name: webstack
+    state: present
+
+- name: Run PostgreSQL container
+  docker_container:
+    name: postgres
+    image: postgres:15
+    state: started
+    restart_policy: always
+    env:
+      POSTGRES_DB: "{{ db_name }}"
+      POSTGRES_USER: "{{ db_user }}"
+      POSTGRES_PASSWORD: "{{ db_password }}"
+    ports:
+      - "{{ db_port }}:5432"
+    networks:
+      - name: webstack

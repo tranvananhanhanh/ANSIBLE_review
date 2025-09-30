@@ -1,0 +1,22 @@
+- name: Build backend Docker image
+  docker_image:
+    path: "{{ role_path }}/files"
+    name: "{{ backend_image }}"
+    state: present
+
+- name: Run Flask container
+  docker_container:
+    name: backend
+    image: "{{ backend_image }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ backend_port }}:5000"
+    networks:
+      - name: webstack
+    env:
+      DB_HOST: postgres
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_password }}"
+      DB_NAME: "{{ db_name }}"
+      DB_PORT: "{{ db_port }}"

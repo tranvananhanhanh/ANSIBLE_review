@@ -1,0 +1,12 @@
+# Database
+db_name: myapp
+db_user: myuser
+db_password: mypass
+db_port: 5432
+
+# Backend
+backend_image: flask_app
+backend_port: 5000
+
+# Frontend
+frontend_port: 8080
